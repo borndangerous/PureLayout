@@ -71,6 +71,34 @@
 
 #endif /* __PureLayout_MinBaseSDK_iOS_8_0 */
 
+#pragma mark Extensions + Shortcuts
+
+-(void)autoClearConstraints;
+-(void)autoClearAllConstraints;
+-(void)autoClearAllFuckingConstraints;
+
+-(void)autoSetDimensionsToEqualSize:(CGFloat)size;
+-(void)autoSetSize:(CGSize)size;
+-(void)autoSetHeight:(CGFloat)height;
+-(void)autoSetWidth:(CGFloat)width;
+
+-(void)autoFillSuperview;
+-(void)autoPinEdgesToSuperview;
+-(void)autoPinEdgesExcluding:(ALEdge)edge;
+
+-(void)autoPinTo:(ALEdge)edge;
+-(void)autoPinTo:(ALEdge)edge withInset:(CGFloat)inset;
+-(void)autoPinToTop;
+-(void)autoPinToBottom;
+-(void)autoPinToLeft;
+-(void)autoPinToRight;
+
+-(void)autoCenter;
+-(void)autoCenterVertical;
+-(void)autoCenterHorizontal;
+
+-(void)autoAlignVerticalTo:(UIView*)view;
+-(void)autoAlignHorizontalTo:(UIView*)view;
 
 #pragma mark Center & Align in Superview
 

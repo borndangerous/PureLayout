@@ -101,4 +101,9 @@
                             withFixedSize:(CGFloat)size
                              insetSpacing:(BOOL)shouldSpaceInsets;
 
+#pragma mark - Customisations + Shortcuts
+
+-(void)autoDistributeViewsVertically;
+-(void)autoDistributeViewsHorizontally;
+
 @end

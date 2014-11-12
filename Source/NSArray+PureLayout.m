@@ -389,6 +389,16 @@
     return constraints;
 }
 
+#pragma mark - Customisations + Shortcuts
+
+-(void)autoDistributeViewsVertically {
+    //[self autoDistributeViewsAlongAxis:ALAxisVertical alignedTo: NSLayoutFormatAlignAllCenterX];
+}
+
+-(void)autoDistributeViewsHorizontally {
+    //[self autoDistributeViewsAlongAxis:ALAxisHorizontal withFixedSpacing:30 alignment:NSLayoutFormatAlignAllCenterY];
+}
+
 #pragma mark Internal Helper Methods
 
 /**

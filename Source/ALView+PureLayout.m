@@ -230,6 +230,91 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 #endif /* __PureLayout_MinBaseSDK_iOS_8_0 */
 
+#pragma mark Extensions + Shortcuts
+
+-(void)autoClearConstraints {
+    [self autoRemoveConstraintsAffectingView];
+}
+
+-(void)autoClearAllConstraints {
+    [self autoRemoveConstraintsAffectingViewIncludingImplicitConstraints:YES];
+}
+
+-(void)autoClearAllFuckingConstraints {
+    [self autoRemoveConstraintsAffectingViewAndSubviewsIncludingImplicitConstraints:YES];
+}
+
+-(void)autoSetDimensionsToEqualSize:(CGFloat)size {
+    [self autoSetDimensionsToSize:CGSizeMake(size,size)];
+}
+
+-(void)autoSetSize:(CGSize)size {
+    [self autoSetDimensionsToSize:size];
+}
+
+-(void)autoSetHeight:(CGFloat)height {
+    [self autoSetDimension:ALDimensionHeight toSize:height];
+}
+
+-(void)autoSetWidth:(CGFloat)width {
+    [self autoSetDimension:ALDimensionWidth toSize:width];
+}
+
+-(void)autoPinEdgesToSuperview {
+    [self autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+}
+
+-(void)autoPinEdgesExcluding:(ALEdge)edge {
+    [self autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:edge];
+}
+
+-(void)autoPinTo:(ALEdge)edge {
+    [self autoPinEdgeToSuperviewEdge:edge withInset:0];
+}
+
+-(void)autoPinTo:(ALEdge)edge withInset:(CGFloat)inset {
+    [self autoPinEdgeToSuperviewEdge:edge withInset:inset];
+}
+
+-(void)autoPinToTop {
+    [self autoPinTo:ALEdgeTop];
+}
+
+-(void)autoPinToBottom {
+    [self autoPinTo:ALEdgeBottom];
+}
+
+-(void)autoPinToLeft {
+    [self autoPinTo:ALEdgeLeft];
+}
+
+-(void)autoPinToRight {
+    [self autoPinTo:ALEdgeRight];
+}
+
+-(void)autoFillSuperview {
+    [self autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+}
+
+-(void)autoCenter {
+    [self autoCenterInSuperview];
+}
+
+-(void)autoCenterVertical {
+    [self autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+}
+
+-(void)autoCenterHorizontal {
+    [self autoAlignAxisToSuperviewAxis:ALAxisVertical];
+}
+
+-(void)autoAlignHorizontalTo:(UIView *)view {
+    [self autoAlignAxis:ALAxisVertical toSameAxisOfView:view];
+}
+
+-(void)autoAlignVerticalTo:(UIView *)view {
+    [self autoAlignAxis:ALAxisHorizontal toSameAxisOfView:view];
+}
 
 #pragma mark Center in Superview
 
