@@ -392,10 +392,12 @@
 #pragma mark - Customisations + Shortcuts
 
 -(void)autoDistributeViewsVertically {
-    //[self autoDistributeViewsAlongAxis:ALAxisVertical alignedTo: NSLayoutFormatAlignAllCenterX];
+    [self autoDistributeViewsAlongAxis:ALAxisVertical alignedTo:ALAttributeVertical withFixedSize:30.0f insetSpacing:NO];
 }
 
 -(void)autoDistributeViewsHorizontally {
+    [self autoDistributeViewsAlongAxis:ALAxisHorizontal alignedTo:ALAttributeHorizontal withFixedSize:30.0f insetSpacing:NO];
+    //[self autoDistributeViewsAlongAxis:ALAxisHorizontal alignedTo:ALAttributeVertical withFixedSize:30.0f insetSpacing:NO];
     //[self autoDistributeViewsAlongAxis:ALAxisHorizontal withFixedSpacing:30 alignment:NSLayoutFormatAlignAllCenterY];
 }
 
