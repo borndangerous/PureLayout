@@ -391,12 +391,34 @@
 
 #pragma mark - Customisations + Shortcuts
 
+-(void)autoMatchWidths {
+    [self autoMatchViewsDimension:ALDimensionWidth];    
+}
+
+-(void)autoMatchHeights {
+    [self autoMatchViewsDimension:ALDimensionHeight];
+}
+
+-(void)autoCenterViewsVertically {
+    [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        UIView *view = (UIView*)obj;
+        [view autoCenterHorizontal];
+    }];
+}
+
+-(void)autoCenterViewsHorizontally {
+    [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        UIView *view = (UIView*)obj;
+        [view autoCenterHorizontal];
+    }];
+}
+
 -(void)autoDistributeViewsVertically {
-    [self autoDistributeViewsAlongAxis:ALAxisVertical alignedTo:ALAttributeVertical withFixedSize:30.0f insetSpacing:NO];
+    [self autoDistributeViewsAlongAxis:ALAxisVertical alignedTo:ALAttributeVertical withFixedSpacing:10.0f insetSpacing:YES];
 }
 
 -(void)autoDistributeViewsHorizontally {
-    [self autoDistributeViewsAlongAxis:ALAxisHorizontal alignedTo:ALAttributeHorizontal withFixedSize:30.0f insetSpacing:NO];
+    [self autoDistributeViewsAlongAxis:ALAxisHorizontal alignedTo:ALAttributeHorizontal withFixedSpacing:10.0f insetSpacing:YES];
     //[self autoDistributeViewsAlongAxis:ALAxisHorizontal alignedTo:ALAttributeVertical withFixedSize:30.0f insetSpacing:NO];
     //[self autoDistributeViewsAlongAxis:ALAxisHorizontal withFixedSpacing:30 alignment:NSLayoutFormatAlignAllCenterY];
 }

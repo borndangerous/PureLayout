@@ -103,6 +103,10 @@
 
 #pragma mark - Customisations + Shortcuts
 
+-(void)autoMatchWidths;
+-(void)autoMatchHeights;
+-(void)autoCenterViewsVertically;
+-(void)autoCenterViewsHorizontally;
 -(void)autoDistributeViewsVertically;
 -(void)autoDistributeViewsHorizontally;
 
