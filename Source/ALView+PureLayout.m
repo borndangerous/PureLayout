@@ -268,6 +268,14 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
     [self autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:edge];
 }
 
+-(void)autoPinTopToBottomOf:(UIView*)view {
+    [self autoPinTopToBottomOf:view withSpace:0];
+}
+
+-(void)autoPinTopToBottomOf:(UIView*)view withSpace:(CGFloat)space {
+    [self autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:view withOffset:space];
+}
+
 -(void)autoPinTo:(ALEdge)edge {
     [self autoPinEdgeToSuperviewEdge:edge withInset:0];
 }
