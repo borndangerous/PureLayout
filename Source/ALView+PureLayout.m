@@ -300,6 +300,20 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
     [self autoPinTo:ALEdgeRight];
 }
 
+-(void)autoPinToCorner:(ALCorner)corner {
+    [self autoPinToCorner:corner withInset:0];
+}
+
+-(void)autoPinToCorner:(ALCorner)corner withInset:(CGFloat)inset {
+    
+    ALEdge x = OptionsHasValue(corner, ALEdgeLeft) ? ALEdgeLeft : ALEdgeRight;
+    ALEdge y = OptionsHasValue(corner, ALEdgeBottom) ? ALEdgeBottom : ALEdgeTop;
+
+    [self autoPinTo:x withInset:inset];
+    [self autoPinTo:y withInset:inset];
+
+}
+
 -(void)autoFillSuperview {
     [self autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
 }

@@ -96,6 +96,9 @@
 -(void)autoPinTopToBottomOf:(UIView*)view;
 -(void)autoPinTopToBottomOf:(UIView*)view withSpace:(CGFloat)space;
 
+-(void)autoPinToCorner:(ALCorner)corner;
+-(void)autoPinToCorner:(ALCorner)corner withInset:(CGFloat)inset;
+
 -(void)autoCenter;
 -(void)autoCenterVertical;
 -(void)autoCenterHorizontal;

@@ -82,6 +82,7 @@
 
 #endif /* TARGET_OS_IPHONE */
 
+#define OptionsHasValue(options, value) (((options) & (value)) == (value))
 
 #pragma mark PureLayout Attributes
 
@@ -99,6 +100,14 @@ typedef NS_ENUM(NSInteger, ALEdge) {
     ALEdgeLeading = NSLayoutAttributeLeading,
     /** The trailing edge of the view (right edge for left-to-right languages like English, left edge for right-to-left languages like Arabic). */
     ALEdgeTrailing = NSLayoutAttributeTrailing
+};
+
+/** Constants that represent a corner */
+typedef NS_OPTIONS(NSInteger, ALCorner) {
+    ALCornerBottomLeft = ALEdgeBottom&ALEdgeLeft,
+    ALCornerBottomRight = ALEdgeBottom&ALEdgeRight,
+    ALCornerTopRight = ALEdgeTop&ALEdgeRight,
+    ALCornerTopLeft = ALEdgeTop&ALEdgeLeft
 };
 
 /** Constants that represent dimensions of a view. */
