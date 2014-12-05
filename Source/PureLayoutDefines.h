@@ -110,6 +110,21 @@ typedef NS_OPTIONS(NSInteger, ALCorner) {
     ALCornerTopLeft = ALEdgeTop&ALEdgeLeft
 };
 
+typedef NS_OPTIONS(NSInteger, STCorner) {
+  STCornerBottomLeft = STEdgeBottom&STEdgeLeft,
+  STCornerBottomRight = STEdgeBottom&STEdgeRight,
+  STCornerTopRight = STEdgeTop&STEdgeRight,
+  STCornerTopLeft = STEdgeTop&STEdgeLeft
+};
+
+typedef NS_OPTIONS(NSUInteger, STEdge) {
+  STEdgeNone    = 0,
+  STEdgeTop     = 1 << 0,
+  STEdgeBottom  = 1 << 1,
+  STEdgeLeft    = 1 << 2,
+  STEdgeRight   = 1 << 3
+};
+
 /** Constants that represent dimensions of a view. */
 typedef NS_ENUM(NSInteger, ALDimension) {
     /** The width of the view. */
@@ -124,7 +139,7 @@ typedef NS_ENUM(NSInteger, ALAxis) {
     ALAxisVertical = NSLayoutAttributeCenterX,
     /** A horizontal line through the middle of the view's top and bottom edges. */
     ALAxisHorizontal = NSLayoutAttributeCenterY,
-    
+
     /** A horizontal line at the baseline of the last line of text in the view. (For views that do not draw text, will be equivalent to ALEdgeBottom.) Same as ALAxisLastBaseline. */
     ALAxisBaseline = NSLayoutAttributeBaseline,
     /** A horizontal line at the baseline of the last line of text in the view. (For views that do not draw text, will be equivalent to ALEdgeBottom.) */
@@ -163,7 +178,7 @@ typedef NS_ENUM(NSInteger, ALMarginAxis) {
 
 #endif /* __PureLayout_MinBaseSDK_iOS_8_0 */
 
-/** An attribute of a view that can be used in auto layout constraints. These constants are identical to the more specific enum types: 
+/** An attribute of a view that can be used in auto layout constraints. These constants are identical to the more specific enum types:
     ALEdge, ALAxis, ALDimension, ALMargin, ALMarginAxis. It is safe to cast a more specific enum type to the ALAttribute type. */
 typedef NS_ENUM(NSInteger, ALAttribute) {
     /** The left edge of the view. */

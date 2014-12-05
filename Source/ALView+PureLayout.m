@@ -40,7 +40,7 @@
 
 #pragma mark Factory & Initializer Methods
 
-/** 
+/**
  Creates and returns a new view that does not convert the autoresizing mask into constraints.
  */
 + (instancetype)newAutoLayoutView
@@ -82,10 +82,10 @@ static NSUInteger _al_preventAutomaticConstraintInstallationCount = 0;
     return _al_preventAutomaticConstraintInstallationCount > 0;
 }
 
-/** 
+/**
  Prevents constraints created in the given constraints block from being automatically installed (activated).
- The created constraints returned from each PureLayout API call must be stored, as they are not retained. 
- 
+ The created constraints returned from each PureLayout API call must be stored, as they are not retained.
+
  @param block A block of method calls to the PureLayout API that create constraints.
  */
 + (void)autoCreateConstraintsWithoutInstalling:(ALConstraintsBlock)block
@@ -101,11 +101,11 @@ static NSUInteger _al_preventAutomaticConstraintInstallationCount = 0;
 
 #pragma mark Set Priority For Constraints
 
-/** 
+/**
  A global variable that stores a stack of layout priorities to set on constraints.
  When executing a constraints block passed into the +[autoSetPriority:forConstraints:] method, the priority for
  that call is pushed onto this stack, and when the block finishes executing, that priority is popped off this
- stack. If this stack contains at least 1 priority, the priority at the top of the stack will be set for all 
+ stack. If this stack contains at least 1 priority, the priority at the top of the stack will be set for all
  constraints created by this library (even if automatic constraint installation is being prevented).
  NOTE: Access to this variable is not synchronized (and should only be done on the main thread).
  */
@@ -147,10 +147,10 @@ static NSMutableArray *_al_globalConstraintPriorities = nil;
 /**
  Sets the constraint priority to the given value for all constraints created using the PureLayout
  API within the given constraints block.
- 
- NOTE: This method will have no effect (and will NOT set the priority) on constraints created or added 
+
+ NOTE: This method will have no effect (and will NOT set the priority) on constraints created or added
  without using the PureLayout API!
- 
+
  @param priority The layout priority to be set on all constraints created in the constraints block.
  @param block A block of method calls to the PureLayout API that create and install constraints.
  */
@@ -204,12 +204,12 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
     return [globalConstraintIdentifiers lastObject];
 }
 
-/** 
+/**
  Sets the identifier for all constraints created using the PureLayout API within the given constraints block.
- 
+
  NOTE: This method will have no effect (and will NOT set the identifier) on constraints created or added
  without using the PureLayout API!
- 
+
  @param identifer A string used to identify all constraints created in the constraints block.
  @param block A block of method calls to the PureLayout API that create and install constraints.
  */
@@ -300,17 +300,36 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
     [self autoPinTo:ALEdgeRight];
 }
 
--(void)autoPinToCorner:(ALCorner)corner {
+-(void)autoPinToCorner:(STCorner)corner {
     [self autoPinToCorner:corner withInset:0];
 }
 
--(void)autoPinToCorner:(ALCorner)corner withInset:(CGFloat)inset {
-    
-    ALEdge x = OptionsHasValue(corner, ALEdgeLeft) ? ALEdgeLeft : ALEdgeRight;
-    ALEdge y = OptionsHasValue(corner, ALEdgeBottom) ? ALEdgeBottom : ALEdgeTop;
+-(void)autoPinToCorner:(STCorner)corner withInset:(CGFloat)inset {
 
-    [self autoPinTo:x withInset:inset];
-    [self autoPinTo:y withInset:inset];
+  ALEdge edgeX;
+  ALEdge edgeY;
+
+  if (corner | STEdgeTop == STEdgeTop) {
+    // pin to top
+    edgeY = STEdgeTop;
+  } else {
+    // pin to bottom
+    edgeY = STEdgeBottom;
+  }
+
+  if (corner | STEdgeLeft == STEdgeLeft) {
+    // pin to left
+    edgeX = STEdgeLeft;
+  } else {
+    // pin to right
+    edgeX = STEdgeRight;
+  }
+
+  //ALEdge x = OptionsHasValue(corner, ALEdgeLeft) ? ALEdgeLeft : ALEdgeRight;
+  //ALEdge y = OptionsHasValue(corner, ALEdgeBottom) ? ALEdgeBottom : ALEdgeTop;
+
+  [self autoPinTo:edgeX withInset:inset];
+  [self autoPinTo:edgeY withInset:inset];
 
 }
 
@@ -342,7 +361,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Centers the view in its superview.
- 
+
  @return An array of constraints added.
  */
 - (NSArray *)autoCenterInSuperview
@@ -355,7 +374,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Aligns the view to the same axis of its superview.
- 
+
  @param axis The axis of this view and of its superview to align.
  @return The constraint added.
  */
@@ -371,7 +390,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Centers the view in its superview, taking into account the layout margins of both the view and its superview.
- 
+
  @return An array of constraints added.
  */
 - (NSArray *)autoCenterInSuperviewMargins
@@ -384,7 +403,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Aligns the view to the corresponding margin axis of its superview.
- 
+
  @param axis The axis of this view to align to the corresponding margin axis of its superview.
  @return The constraint added.
  */
@@ -404,7 +423,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Pins the given edge of the view to the same edge of its superview.
- 
+
  @param edge The edge of this view and its superview to pin.
  @return The constraint added.
  */
@@ -415,7 +434,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Pins the given edge of the view to the same edge of its superview with an inset.
- 
+
  @param edge The edge of this view and its superview to pin.
  @param inset The amount to inset this view's edge from the superview's edge.
  @return The constraint added.
@@ -427,7 +446,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Pins the given edge of the view to the same edge of its superview with an inset as a maximum or minimum.
- 
+
  @param edge The edge of this view and its superview to pin.
  @param inset The amount to inset this view's edge from the superview's edge.
  @param relation Whether the inset should be at least, at most, or exactly equal to the given value.
@@ -453,7 +472,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 /**
  Pins the edges of the view to the edges of its superview with the given edge insets.
  The insets.left corresponds to a leading edge constraint, and insets.right corresponds to a trailing edge constraint.
- 
+
  @param insets The insets for this view's edges from its superview's edges.
  @return An array of constraints added.
  */
@@ -470,7 +489,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 /**
  Pins 3 of the 4 edges of the view to the edges of its superview with the given edge insets, excluding one edge.
  The insets.left corresponds to a leading edge constraint, and insets.right corresponds to a trailing edge constraint.
- 
+
  @param insets The insets for this view's edges from its superview's edges. The inset corresponding to the excluded edge
                will be ignored.
  @param edge The edge of this view to exclude in pinning to its superview; this method will not apply any constraint to it.
@@ -495,10 +514,10 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 }
 
 #if __PureLayout_MinBaseSDK_iOS_8_0
-        
+
 /**
  Pins the given edge of the view to the corresponding margin of its superview.
- 
+
  @param edge The edge of this view to pin to the corresponding margin of its superview.
  @return The constraint added.
  */
@@ -509,7 +528,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Pins the given edge of the view to the corresponding margin of its superview as a maximum or minimum.
- 
+
  @param edge The edge of this view to pin to the corresponding margin of its superview.
  @param relation Whether the edge should be inset by at least, at most, or exactly the superview's margin.
  @return The constraint added.
@@ -530,10 +549,10 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
     ALMargin margin = [NSLayoutConstraint al_marginForEdge:edge];
     return [self autoConstrainAttribute:(ALAttribute)edge toAttribute:(ALAttribute)margin ofView:superview withOffset:0.0 relation:relation];
 }
-        
+
 /**
  Pins the edges of the view to the margins of its superview.
- 
+
  @return An array of constraints added.
  */
 - (NSArray *)autoPinEdgesToSuperviewMargins
@@ -548,7 +567,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Pins 3 of the 4 edges of the view to the margins of its superview, excluding one edge.
- 
+
  @param edge The edge of this view to exclude in pinning to its superview; this method will not apply any constraint to it.
  @return An array of constraints added.
  */
@@ -577,7 +596,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Pins an edge of the view to a given edge of another view.
- 
+
  @param edge The edge of this view to pin.
  @param toEdge The edge of the other view to pin to.
  @param otherView The other view to pin to. Must be in the same view hierarchy as this view.
@@ -590,7 +609,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Pins an edge of the view to a given edge of another view with an offset.
- 
+
  @param edge The edge of this view to pin.
  @param toEdge The edge of the other view to pin to.
  @param otherView The other view to pin to. Must be in the same view hierarchy as this view.
@@ -604,7 +623,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Pins an edge of the view to a given edge of another view with an offset as a maximum or minimum.
- 
+
  @param edge The edge of this view to pin.
  @param toEdge The edge of the other view to pin to.
  @param otherView The other view to pin to. Must be in the same view hierarchy as this view.
@@ -622,7 +641,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Aligns an axis of the view to the same axis of another view.
- 
+
  @param axis The axis of this view and the other view to align.
  @param otherView The other view to align to. Must be in the same view hierarchy as this view.
  @return The constraint added.
@@ -634,7 +653,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Aligns an axis of the view to the same axis of another view with an offset.
- 
+
  @param axis The axis of this view and the other view to align.
  @param otherView The other view to align to. Must be in the same view hierarchy as this view.
  @param offset The offset between the axis of this view and the axis of the other view.
@@ -650,7 +669,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Matches a dimension of the view to a given dimension of another view.
- 
+
  @param dimension The dimension of this view to pin.
  @param toDimension The dimension of the other view to pin to.
  @param otherView The other view to match to. Must be in the same view hierarchy as this view.
@@ -663,7 +682,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Matches a dimension of the view to a given dimension of another view with an offset.
- 
+
  @param dimension The dimension of this view to pin.
  @param toDimension The dimension of the other view to pin to.
  @param otherView The other view to match to. Must be in the same view hierarchy as this view.
@@ -677,7 +696,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Matches a dimension of the view to a given dimension of another view with an offset as a maximum or minimum.
- 
+
  @param dimension The dimension of this view to pin.
  @param toDimension The dimension of the other view to pin to.
  @param otherView The other view to match to. Must be in the same view hierarchy as this view.
@@ -692,7 +711,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Matches a dimension of the view to a multiple of a given dimension of another view.
- 
+
  @param dimension The dimension of this view to pin.
  @param toDimension The dimension of the other view to pin to.
  @param otherView The other view to match to. Must be in the same view hierarchy as this view.
@@ -706,7 +725,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Matches a dimension of the view to a multiple of a given dimension of another view as a maximum or minimum.
- 
+
  @param dimension The dimension of this view to pin.
  @param toDimension The dimension of the other view to pin to.
  @param otherView The other view to match to. Must be in the same view hierarchy as this view.
@@ -724,7 +743,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Sets the view to a specific size.
- 
+
  @param size The size to set this view's dimensions to.
  @return An array of constraints added.
  */
@@ -738,7 +757,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Sets the given dimension of the view to a specific size.
- 
+
  @param dimension The dimension of this view to set.
  @param size The size to set the given dimension to.
  @return The constraint added.
@@ -750,7 +769,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Sets the given dimension of the view to a specific size as a maximum or minimum.
- 
+
  @param dimension The dimension of this view to set.
  @param size The size to set the given dimension to.
  @param relation Whether the size should be at least, at most, or exactly equal to the given value.
@@ -771,7 +790,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 /**
  Sets the priority of content compression resistance for an axis.
  NOTE: This method must be called from within the block passed into the method +[autoSetPriority:forConstraints:]
- 
+
  @param axis The axis to set the content compression resistance priority for.
  */
 - (void)autoSetContentCompressionResistancePriorityForAxis:(ALAxis)axis
@@ -791,7 +810,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 /**
  Sets the priority of content hugging for an axis.
  NOTE: This method must be called from within the block passed into the method +[autoSetPriority:forConstraints:]
- 
+
  @param axis The axis to set the content hugging priority for.
  */
 - (void)autoSetContentHuggingPriorityForAxis:(ALAxis)axis
@@ -814,7 +833,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 /**
  Constrains an attribute of the view to a given attribute of another view.
  This method can be used to constrain different types of attributes across two views.
- 
+
  @param attribute Any attribute of this view to constrain.
  @param toAttribute Any attribute of the other view to constrain to.
  @param otherView The other view to constrain to. Must be in the same view hierarchy as this view.
@@ -828,7 +847,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 /**
  Constrains an attribute of the view to a given attribute of another view with an offset.
  This method can be used to constrain different types of attributes across two views.
- 
+
  @param attribute Any attribute of this view to constrain.
  @param toAttribute Any attribute of the other view to constrain to.
  @param otherView The other view to constrain to. Must be in the same view hierarchy as this view.
@@ -843,7 +862,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 /**
  Constrains an attribute of the view to a given attribute of another view with an offset as a maximum or minimum.
  This method can be used to constrain different types of attributes across two views.
- 
+
  @param attribute Any attribute of this view to constrain.
  @param toAttribute Any attribute of the other view to constrain to.
  @param otherView The other view to constrain to. Must be in the same view hierarchy as this view.
@@ -864,7 +883,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 /**
  Constrains an attribute of the view to a given attribute of another view with a multiplier.
  This method can be used to constrain different types of attributes across two views.
- 
+
  @param attribute Any attribute of this view to constrain.
  @param toAttribute Any attribute of the other view to constrain to.
  @param otherView The other view to constrain to. Must be in the same view hierarchy as this view.
@@ -879,7 +898,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 /**
  Constrains an attribute of the view to a given attribute of another view with a multiplier as a maximum or minimum.
  This method can be used to constrain different types of attributes across two views.
- 
+
  @param attribute Any attribute of this view to constrain.
  @param toAttribute Any attribute of the other view to constrain to.
  @param otherView The other view to constrain to. Must be in the same view hierarchy as this view.
@@ -906,7 +925,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
  Pins the top edge of the view to the top layout guide of the given view controller with an inset.
  For compatibility with iOS 6 (where layout guides do not exist), this method will simply pin the top edge of
  the view to the top edge of the given view controller's view with an inset.
- 
+
  @param viewController The view controller whose topLayoutGuide should be used to pin to.
  @param inset The amount to inset this view's top edge from the layout guide.
  @return The constraint added.
@@ -933,7 +952,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
  Pins the bottom edge of the view to the bottom layout guide of the given view controller with an inset.
  For compatibility with iOS 6 (where layout guides do not exist), this method will simply pin the bottom edge of
  the view to the bottom edge of the given view controller's view with an inset.
- 
+
  @param viewController The view controller whose bottomLayoutGuide should be used to pin to.
  @param inset The amount to inset this view's bottom edge from the layout guide.
  @return The constraint added.
@@ -987,7 +1006,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
  It is not recommended to use this method to "reset" a view for reuse in a different way with new constraints. Create a new view instead.
  NOTE: Implicit constraints are auto-generated lower priority constraints (such as those that attempt to keep a view at
  its intrinsic content size by hugging its content & resisting compression), and you usually do not want to remove these.
- 
+
  @param shouldRemoveImplicitConstraints Whether implicit constraints should be removed or skipped.
  */
 - (void)autoRemoveConstraintsAffectingViewIncludingImplicitConstraints:(BOOL)shouldRemoveImplicitConstraints
@@ -1027,7 +1046,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
  It is not recommended to use this method to "reset" views for reuse in a different way with new constraints. Create a new view instead.
  NOTE: Implicit constraints are auto-generated lower priority constraints (such as those that attempt to keep a view at
  its intrinsic content size by hugging its content & resisting compression), and you usually do not want to remove these.
- 
+
  @param shouldRemoveImplicitConstraints Whether implicit constraints should be removed or skipped.
  */
 - (void)autoRemoveConstraintsAffectingViewAndSubviewsIncludingImplicitConstraints:(BOOL)shouldRemoveImplicitConstraints
@@ -1044,7 +1063,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 /**
  Applies the global constraint priority and identifier to the given constraint.
  This should be done before installing all constraints.
- 
+
  @param constraint The constraint to set the global priority and identifier on.
  */
 + (void)al_applyGlobalStateToConstraint:(NSLayoutConstraint *)constraint
@@ -1064,9 +1083,9 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
  Adds the given constraint to this view after applying the global state to the constraint.
  NOTE: This method is compatible with all versions of iOS, and should be used for older versions before the active
  property on NSLayoutConstraint was introduced.
- 
+
  This method should be the only one that calls the UIView/NSView addConstraint: method directly.
- 
+
  @param constraint The constraint to set the global priority on and then add to this view.
  */
 - (void)al_addConstraint:(NSLayoutConstraint *)constraint
@@ -1080,7 +1099,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 /**
  Returns the common superview for this view and the given other view.
  Raises an exception if this view and the other view do not share a common superview.
- 
+
  @return The common superview for the two views.
  */
 - (ALView *)al_commonSuperviewWithView:(ALView *)otherView
@@ -1105,7 +1124,7 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
 
 /**
  Aligns this view to another view with an alignment attribute.
- 
+
  @param attribute The attribute to use to align the two views.
  @param otherView The other view to align to.
  @param axis The axis along which the views are distributed, used to validate the alignment attribute.
