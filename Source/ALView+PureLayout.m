@@ -300,29 +300,29 @@ static NSMutableArray *_al_globalConstraintIdentifiers = nil;
     [self autoPinTo:ALEdgeRight];
 }
 
--(void)autoPinToCorner:(STCorner)corner {
+-(void)autoPinToCorner:(ALCorner)corner {
     [self autoPinToCorner:corner withInset:0];
 }
 
--(void)autoPinToCorner:(STCorner)corner withInset:(CGFloat)inset {
+-(void)autoPinToCorner:(ALCorner)corner withInset:(CGFloat)inset {
 
   ALEdge edgeX;
   ALEdge edgeY;
 
-  if (corner | STEdgeTop == STEdgeTop) {
+  if (corner | ALEdgeTop) {
     // pin to top
-    edgeY = STEdgeTop;
+    edgeY = ALEdgeTop;
   } else {
     // pin to bottom
-    edgeY = STEdgeBottom;
+    edgeY = ALEdgeBottom;
   }
 
-  if (corner | STEdgeLeft == STEdgeLeft) {
+  if (corner | ALEdgeLeft) {
     // pin to left
-    edgeX = STEdgeLeft;
+    edgeX = ALEdgeLeft;
   } else {
     // pin to right
-    edgeX = STEdgeRight;
+    edgeX = ALEdgeRight;
   }
 
   //ALEdge x = OptionsHasValue(corner, ALEdgeLeft) ? ALEdgeLeft : ALEdgeRight;

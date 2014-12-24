@@ -110,12 +110,14 @@ typedef NS_OPTIONS(NSInteger, ALCorner) {
     ALCornerTopLeft = ALEdgeTop&ALEdgeLeft
 };
 
+/*
 typedef NS_OPTIONS(NSInteger, STCorner) {
   STCornerBottomLeft = STEdgeBottom&STEdgeLeft,
   STCornerBottomRight = STEdgeBottom&STEdgeRight,
   STCornerTopRight = STEdgeTop&STEdgeRight,
   STCornerTopLeft = STEdgeTop&STEdgeLeft
 };
+*/
 
 typedef NS_OPTIONS(NSUInteger, STEdge) {
   STEdgeNone    = 0,
